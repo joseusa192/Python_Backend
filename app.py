@@ -2,12 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import psycopg2 
 
 app = Flask(__name__)
-conn = psycopg2.connect("dbname=python user=postgres password=joseman2000 host=localhost port=5000")
+conn = psycopg2.connect("dbname=python user=postgres password=******* host=localhost port=defauld")
 app.secret_key = 'mysecretkey'
 
 @app.route('/')
 def home():
-    conn = psycopg2.connect("dbname=python user=postgres password=joseman2000 host=localhost port=5000")
+    conn = psycopg2.connect("dbname=python user=postgres password=******* host=localhost port=defauld")
     cur = conn.cursor()
     cur.execute('SELECT * FROM contacts_1')
     data = cur.fetchall()
@@ -23,9 +23,8 @@ def new_contact():
         email = request.form['e-mail']
         telefono = request.form['telefono']
 
-        conn = psycopg2.connect("dbname=python user=postgres password=joseman2000 host=localhost port=5000")      
+        conn = psycopg2.connect("dbname=python user=postgres password=******* host=localhost port=defauld")      
         cur = conn.cursor()
-        #cur.execute('CREATE TABLE contacts_2 (id serial PRIMARY KEY, nombres varchar, apellidos varchar, telefono varchar, email varchar)')
         query = """INSERT INTO contacts_1 (nombres, apellidos, telefono, email) VALUES (%s, %s, %s, %s)"""
         cur.execute(query,(Nombres, Apellidos, email, telefono))
         conn.commit()
@@ -38,7 +37,7 @@ def new_contact():
 
 @app.route('/edit_contact/<string:id>')
 def edit_contact(id):
-    conn = psycopg2.connect("dbname=python user=postgres password=joseman2000 host=localhost port=5000")
+    conn = psycopg2.connect("dbname=python user=postgres password=******* host=localhost port=defauld")
     cur = conn.cursor()
     cur.execute('SELECT * FROM contacts_1 WHERE id={0}'.format(id))
     data = cur.fetchall()
@@ -52,7 +51,7 @@ def update_contact(id):
         email = request.form['e-mail']
         telefono = request.form['telefono']
 
-        conn = psycopg2.connect("dbname=python user=postgres password=joseman2000 host=localhost port=5000")
+        conn = psycopg2.connect("dbname=python user=postgres password=******* host=localhost port=defauld")
         cur = conn.cursor()
         cur.execute("""
         UPDATE contacts_1
@@ -70,7 +69,7 @@ def update_contact(id):
 
 @app.route('/delete_contact/<string:id>')
 def delete_contact(id):
-    conn = psycopg2.connect("dbname=python user=postgres password=joseman2000 host=localhost port=5000")
+    conn = psycopg2.connect("dbname=python user=postgres password=******* host=localhost port=defauld")
     cur = conn.cursor()
     cur.execute('DELETE FROM contacts_1 WHERE id={0}'.format(id))
     conn.commit()
@@ -80,7 +79,7 @@ def delete_contact(id):
     return redirect(url_for('home'))
 
 if __name__ == "__main__":
-    app.run(port=3000,debug=True)
+    app.run(debug=True)
 
 
 
